@@ -1,5 +1,6 @@
 {
   "name": "@saas/api",
+  "type": "module",
   "version": "1.0.0",
   "scripts": {
     "dev": "npm run env:load -- tsx watch src/http/server.ts",
