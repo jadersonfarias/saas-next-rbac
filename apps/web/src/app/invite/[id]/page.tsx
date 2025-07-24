@@ -14,7 +14,7 @@ import Link from 'next/link'
 
 dayjs.extend(relativeTime)
 
-interface InvitePageProps {
+type InvitePageProps = {
   params: {
     id: string
   }
