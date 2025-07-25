@@ -14,24 +14,20 @@ import Link from 'next/link'
 
 dayjs.extend(relativeTime)
 
-type InvitePageProps = {
-  params: {
-    id: string
-  }
-}
-
-export default async function InvitePage({ params }: InvitePageProps) {
+export default async function InvitePage({
+  params,
+}: {
+  params: { id: string }
+}) {
   const inviteId = params.id
 
   const { invite } = await getInvite(inviteId)
   const isUserAuthenticated = await isAuthenticated()
 
-
   let currentUserEmail = null
 
   if (isUserAuthenticated) {
     const { user } = await auth()
-
     currentUserEmail = user.email
   }
 
@@ -47,7 +43,7 @@ export default async function InvitePage({ params }: InvitePageProps) {
     redirect(`/auth/sign-in?email=${invite.email}`)
   }
 
- async function acceptInviteAction() {
+  async function acceptInviteAction() {
     'use server'
 
     await acceptInvite(inviteId)
@@ -75,13 +71,15 @@ export default async function InvitePage({ params }: InvitePageProps) {
               {invite.organization.name}
             </span>
             .{' '}
-            <span className="text-xs">{dayjs(invite.createdAt).fromNow()}</span>
+            <span className="text-xs">
+              {dayjs(invite.createdAt).fromNow()}
+            </span>
           </p>
         </div>
 
         <Separator />
 
-          {!isUserAuthenticated && (
+        {!isUserAuthenticated && (
           <form action={signInFromInvite}>
             <Button type="submit" variant="secondary" className="w-full">
               <LogIn className="mr-2 size-4" />
@@ -98,37 +96,37 @@ export default async function InvitePage({ params }: InvitePageProps) {
             </Button>
           </form>
         )}
-          
-        {isUserAuthenticated && !userIsAuthenticatedWithSameEmailFromInvite && (
-                  <div className="space-y-4">
-            <p className="text-balance text-center text-sm leading-relaxed text-muted-foreground">
-              This invite was sent to{' '}
-              <span className="font-medium text-foreground">
-                {invite.email}
-              </span>{' '}
-              but you are currently authenticated as{' '}
-              <span className="font-medium text-foreground">
-                {currentUserEmail}
-              </span>
-              .
-            </p>
 
-            <div className="space-y-2">
-              <Button className="w-full" variant="secondary" asChild>
-                <a href="/api/auth/sign-out">
-                  <LogOut className="mr-2 size-4" />
-                  Sign out from {currentUserEmail}
-                </a>
-              </Button>
+        {isUserAuthenticated &&
+          !userIsAuthenticatedWithSameEmailFromInvite && (
+            <div className="space-y-4">
+              <p className="text-balance text-center text-sm leading-relaxed text-muted-foreground">
+                This invite was sent to{' '}
+                <span className="font-medium text-foreground">
+                  {invite.email}
+                </span>{' '}
+                but you are currently authenticated as{' '}
+                <span className="font-medium text-foreground">
+                  {currentUserEmail}
+                </span>
+                .
+              </p>
 
-              <Button className="w-full" variant="outline" asChild>
-                <Link href="/">Back to dashboard</Link>
-              </Button>
+              <div className="space-y-2">
+                <Button className="w-full" variant="secondary" asChild>
+                  <a href="/api/auth/sign-out">
+                    <LogOut className="mr-2 size-4" />
+                    Sign out from {currentUserEmail}
+                  </a>
+                </Button>
+
+                <Button className="w-full" variant="outline" asChild>
+                  <Link href="/">Back to dashboard</Link>
+                </Button>
+              </div>
             </div>
-          </div>
-        )}  
-
-       </div>
+          )}
+      </div>
     </div>
   )
 }
