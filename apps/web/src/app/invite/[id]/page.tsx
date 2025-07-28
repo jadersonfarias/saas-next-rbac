@@ -1,18 +1,24 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Separator } from '@/components/ui/separator'
-import { getInvite } from '@/http/get-invite'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { auth, isAuthenticated } from '@/auth/auth'
-import { Button } from '@/components/ui/button'
 import { CheckCircle, LogIn, LogOut } from 'lucide-react'
-import { acceptInvite } from '@/http/accept-invite'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
+
+import { auth, isAuthenticated } from '@/auth/auth'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { acceptInvite } from '@/http/accept-invite'
+import { getInvite } from '@/http/get-invite'
 
 dayjs.extend(relativeTime)
+
+// interface InvitePageProps {
+//   params: {
+//     id: string
+//   }
+// }
 
 export default async function InvitePage({
   params,
@@ -62,18 +68,16 @@ export default async function InvitePage({
             <AvatarFallback />
           </Avatar>
 
-          <p className="text-balance text-center leading-relaxed text-muted-foreground">
-            <span className="font-medium text-foreground">
+          <p className="text-muted-foreground text-center leading-relaxed text-balance">
+            <span className="text-foreground font-medium">
               {invite.author?.name ?? 'Someone'}
             </span>{' '}
             invited you to join{' '}
-            <span className="font-medium text-foreground">
+            <span className="text-foreground font-medium">
               {invite.organization.name}
             </span>
             .{' '}
-            <span className="text-xs">
-              {dayjs(invite.createdAt).fromNow()}
-            </span>
+            <span className="text-xs">{dayjs(invite.createdAt).fromNow()}</span>
           </p>
         </div>
 
@@ -97,35 +101,34 @@ export default async function InvitePage({
           </form>
         )}
 
-        {isUserAuthenticated &&
-          !userIsAuthenticatedWithSameEmailFromInvite && (
-            <div className="space-y-4">
-              <p className="text-balance text-center text-sm leading-relaxed text-muted-foreground">
-                This invite was sent to{' '}
-                <span className="font-medium text-foreground">
-                  {invite.email}
-                </span>{' '}
-                but you are currently authenticated as{' '}
-                <span className="font-medium text-foreground">
-                  {currentUserEmail}
-                </span>
-                .
-              </p>
+        {isUserAuthenticated && !userIsAuthenticatedWithSameEmailFromInvite && (
+          <div className="space-y-4">
+            <p className="text-muted-foreground text-center text-sm leading-relaxed text-balance">
+              This invite was sent to{' '}
+              <span className="text-foreground font-medium">
+                {invite.email}
+              </span>{' '}
+              but you are currently authenticated as{' '}
+              <span className="text-foreground font-medium">
+                {currentUserEmail}
+              </span>
+              .
+            </p>
 
-              <div className="space-y-2">
-                <Button className="w-full" variant="secondary" asChild>
-                  <a href="/api/auth/sign-out">
-                    <LogOut className="mr-2 size-4" />
-                    Sign out from {currentUserEmail}
-                  </a>
-                </Button>
+            <div className="space-y-2">
+              <Button className="w-full" variant="secondary" asChild>
+                <a href="/api/auth/sign-out">
+                  <LogOut className="mr-2 size-4" />
+                  Sign out from {currentUserEmail}
+                </a>
+              </Button>
 
-                <Button className="w-full" variant="outline" asChild>
-                  <Link href="/">Back to dashboard</Link>
-                </Button>
-              </div>
+              <Button className="w-full" variant="outline" asChild>
+                <Link href="/">Back to dashboard</Link>
+              </Button>
             </div>
-          )}
+          </div>
+        )}
       </div>
     </div>
   )
