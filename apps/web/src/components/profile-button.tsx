@@ -1,26 +1,26 @@
 import { ChevronDown, LogOut } from 'lucide-react'
- 
- import { auth } from '@/auth/auth'
- 
- import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
- import {
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuTrigger,
- } from './ui/dropdown-menu'
- 
- function getInitials(name: string): string {
-   const initials = name
-     .split(' ')
-     .map((word) => word.charAt(0).toUpperCase())
-     .slice(0, 2)
-     .join('')
- 
-   return initials
- }
- 
- export async function ProfileButton() {
+
+import { auth } from '@/auth/auth'
+
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu'
+
+function getInitials(name: string): string {
+  const initials = name
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase())
+    .slice(0, 2)
+    .join('')
+
+  return initials
+}
+
+export async function ProfileButton() {
   console.log('Carregando ProfileButton...')
   try {
     const { user } = await auth()
@@ -31,7 +31,7 @@ import { ChevronDown, LogOut } from 'lucide-react'
         <DropdownMenuTrigger className="flex items-center gap-3 outline-none">
           <div className="flex flex-col items-end">
             <span className="text-sm font-medium">{user.name}</span>
-            <span className="text-xs text-muted-foreground">{user.email}</span>
+            <span className="text-muted-foreground text-xs">{user.email}</span>
           </div>
           <Avatar>
             {user.avatarUrl && <AvatarImage src={user.avatarUrl} />}
@@ -39,7 +39,7 @@ import { ChevronDown, LogOut } from 'lucide-react'
               <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
             )}
           </Avatar>
-          <ChevronDown className="size-4 text-muted-foreground" />
+          <ChevronDown className="text-muted-foreground size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
@@ -53,7 +53,7 @@ import { ChevronDown, LogOut } from 'lucide-react'
     )
   } catch (error) {
     console.error('Erro ao carregar o botão de perfil:', error)
-    
+
     return null // Retorna `null` para evitar quebrar a página
   }
 }

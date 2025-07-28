@@ -6,7 +6,7 @@ interface GetOrganizationsResponse {
     name: string
     slug: string
     avatarUrl: string | null
-  }
+  }[]
 }
 
 export async function getOrganizations() {

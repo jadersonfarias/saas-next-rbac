@@ -27,10 +27,11 @@
 //   return response
 // }
 
-import { NextRequest, NextResponse } from 'next/server'
-import { signInWithGithub } from '@/http/sign-in-with-github'
 import { cookies } from 'next/headers'
+import { NextRequest, NextResponse } from 'next/server'
+
 import { acceptInvite } from '@/http/accept-invite'
+import { signInWithGithub } from '@/http/sign-in-with-github'
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
@@ -47,15 +48,14 @@ export async function GET(request: NextRequest) {
 
   const inviteId = (await cookies()).get('inviteId')?.value
 
-
-    if (inviteId) {
-      try {
-        await acceptInvite(inviteId)
-        ;(await cookies()).delete('inviteId')
-      } catch (e) {
-        console.log(e)
-      }
+  if (inviteId) {
+    try {
+      await acceptInvite(inviteId)
+      ;(await cookies()).delete('inviteId')
+    } catch (e) {
+      console.log(e)
     }
+  }
   const redirectUrl = new URL('/', request.url)
   const response = NextResponse.redirect(redirectUrl)
 

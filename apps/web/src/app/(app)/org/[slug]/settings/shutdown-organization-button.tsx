@@ -1,4 +1,3 @@
-
 import { XCircle } from 'lucide-react'
 import { redirect } from 'next/navigation'
 

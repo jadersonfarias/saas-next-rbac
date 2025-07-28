@@ -1,5 +1,5 @@
-
 import { ability } from '@/auth/auth'
+
 import { NavLink } from './nav-link'
 import { Button } from './ui/button'
 
@@ -19,12 +19,12 @@ export async function Tabs({ currentOrg }: TabsProps) {
   return (
     <div className="border-b py-4">
       <nav className="mx-auto flex max-w-[1200px] items-center gap-2">
-         {canGetProjects && (
+        {canGetProjects && (
           <Button
             asChild
             variant="ghost"
             size="sm"
-            className="border border-transparent text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground"
+            className="text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground border border-transparent"
           >
             <NavLink href={`/org/${currentOrg}`}>Projects</NavLink>
           </Button>
@@ -35,7 +35,7 @@ export async function Tabs({ currentOrg }: TabsProps) {
             asChild
             variant="ghost"
             size="sm"
-            className="border border-transparent text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground"
+            className="text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground border border-transparent"
           >
             <NavLink href={`/org/${currentOrg}/members`}>Members</NavLink>
           </Button>
@@ -46,7 +46,7 @@ export async function Tabs({ currentOrg }: TabsProps) {
             asChild
             variant="ghost"
             size="sm"
-            className="border border-transparent text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground"
+            className="text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground border border-transparent"
           >
             <NavLink href={`/org/${currentOrg}/settings`}>
               Settings & Billing

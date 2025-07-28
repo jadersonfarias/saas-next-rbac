@@ -1,5 +1,5 @@
-import { getCookie } from 'cookies-next'
 import { env } from '@saas/env'
+import { getCookie } from 'cookies-next'
 import ky from 'ky'
 
 export const api = ky.create({

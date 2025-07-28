@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from 'next/server'
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  const response = NextResponse.next() //já fiz o que tinha que fazer
+  const response = NextResponse.next() // já fiz o que tinha que fazer
 
   if (pathname.startsWith('/org')) {
-    const [, , slug] = pathname.split('/') // pega os outro dois 
+    const [, , slug] = pathname.split('/') // pega os outro dois
 
     response.cookies.set('org', slug)
   } else {

@@ -1,4 +1,3 @@
-
 'use client'
 
 import * as SheetPrimitive from '@radix-ui/react-dialog'
@@ -6,6 +5,7 @@ import { XIcon } from 'lucide-react'
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
+
 import { SheetOverlay, SheetPortal } from './ui/sheet'
 
 const InterceptedSheetContent = React.forwardRef<
@@ -15,7 +15,7 @@ const InterceptedSheetContent = React.forwardRef<
   }
 >(function SheetContent(
   { className, children, side = 'right', ...props },
-  ref
+  ref,
 ) {
   return (
     <SheetPortal>
@@ -33,12 +33,12 @@ const InterceptedSheetContent = React.forwardRef<
             'data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top inset-x-0 top-0 h-auto border-b',
           side === 'bottom' &&
             'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t',
-          className
+          className,
         )}
         {...props}
       >
         {children}
-        <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+        <SheetPrimitive.Close className="focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none">
           <XIcon className="size-4" />
           <span className="sr-only">Close</span>
         </SheetPrimitive.Close>

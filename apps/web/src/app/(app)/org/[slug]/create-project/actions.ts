@@ -1,9 +1,10 @@
 'use server'
 
-import { getCurrentOrg } from '@/auth/auth'
-import { createProject } from '@/http/create-project'
 import { HTTPError } from 'ky'
 import { z } from 'zod'
+
+import { getCurrentOrg } from '@/auth/auth'
+import { createProject } from '@/http/create-project'
 
 // import { createProject } from '@/http/create-project'
 
@@ -37,7 +38,7 @@ export async function createProjectAction(data: FormData) {
 
   try {
     await createProject({
-      org: org,
+      org,
       name,
       description,
     })

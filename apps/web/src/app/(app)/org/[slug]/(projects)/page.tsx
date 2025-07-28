@@ -1,6 +1,5 @@
 import { Plus } from 'lucide-react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 
 import { ability, getCurrentOrg } from '@/auth/auth'
 import { Button } from '@/components/ui/button'
@@ -29,7 +28,7 @@ export default async function Projects() {
       {permissions?.can('get', 'Project') ? (
         <ProjectList />
       ) : (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           You are not allowed to see organization projects.
         </p>
       )}

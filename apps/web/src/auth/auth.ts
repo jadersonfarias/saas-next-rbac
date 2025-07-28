@@ -1,20 +1,19 @@
-
-import { redirect } from 'next/navigation';
+import { defineAbilityFor } from '@saas/auth'
 import { cookies } from 'next/headers'
-import { getProfile } from '@/http/get-profile';
-import { getMembership } from '@/http/get-membership';
-import { defineAbilityFor } from '@saas/auth';
- 
- export async function isAuthenticated() {
-   const cookieStore = await cookies();
-   return !!cookieStore.get('token')?.value;
- }
+import { redirect } from 'next/navigation'
 
-export async function getCurrentOrg() {
-  const cookieStore = await cookies();
-  return cookieStore.get('org')?.value ?? null;
+import { getMembership } from '@/http/get-membership'
+import { getProfile } from '@/http/get-profile'
+
+export async function isAuthenticated() {
+  const cookieStore = await cookies()
+  return !!cookieStore.get('token')?.value
 }
 
+export async function getCurrentOrg() {
+  const cookieStore = await cookies()
+  return cookieStore.get('org')?.value ?? null
+}
 
 export async function getCurrentMembership() {
   const org = await getCurrentOrg()
@@ -28,9 +27,8 @@ export async function getCurrentMembership() {
   return membership
 }
 
-
- export async function ability() {
-   const membership = await getCurrentMembership()
+export async function ability() {
+  const membership = await getCurrentMembership()
 
   if (!membership) {
     return null
@@ -42,11 +40,11 @@ export async function getCurrentMembership() {
   })
 
   return ability
- }
+}
 
- export async function auth() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
+export async function auth() {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('token')?.value
 
   if (!token) {
     redirect('/api/auth/sign')
@@ -55,10 +53,8 @@ export async function getCurrentMembership() {
   try {
     const { user } = await getProfile()
 
-    return {user}
-  } catch {
-   
-  }
+    return { user }
+  } catch {}
 
   redirect('/api/auth/sign-out')
 }
